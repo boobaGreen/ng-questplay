@@ -34,7 +34,7 @@ contract Doubloon {
      * @param _supply La quantità iniziale di token da creare.
      */
     constructor(uint256 _supply) {
-        totalSupply = _supply * (10 ** uint256(decimals)); // Imposta la fornitura totale (aggiunge i decimali).
+        totalSupply = _supply * (1 ** uint256(decimals)); // Imposta la fornitura totale (aggiunge i decimali).
         balanceOf[msg.sender] = totalSupply; // Assegna tutti i token al creatore iniziale.
     }
 

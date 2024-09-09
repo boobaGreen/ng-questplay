@@ -9,7 +9,7 @@ import "./interfaces/IERC20.sol";
 contract Doubloon {
     string public constant name = "Doubloon";
     string public constant symbol = "DBL";
-    uint8 public constant decimals = 10;
+    uint8 public constant decimals = 16;
     uint256 public totalSupply; // Variabile di stato per la fornitura totale di token.
 
     mapping(address => uint256) public balanceOf;

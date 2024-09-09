@@ -29,7 +29,7 @@ contract MintableDoubloon is Doubloon {
             "Solo il proprietario puo mintare nuovi token"
         );
 
-        uint256 mintAmount = _amount * (10 ** uint256(decimals)); // Aggiunge i decimali all'importo da mintare
+        uint256 mintAmount = _amount; // Aggiunge i decimali all'importo da mintare
         totalSupply += mintAmount; // Aumenta la fornitura totale con i decimali inclusi
         balanceOf[_to] += mintAmount; // Aggiunge i nuovi token al bilancio dell'indirizzo _to
         emit Transfer(address(0), _to, mintAmount); // Emissione evento Transfer con from impostato a zero address

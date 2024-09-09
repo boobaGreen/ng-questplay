@@ -26,7 +26,7 @@ contract MintableDoubloon is Doubloon {
     function mint(address _to, uint256 _amount) external {
         require(
             msg.sender == owner,
-            "Solo il proprietario può mintare nuovi token"
+            "Solo il proprietario puo mintare nuovi token"
         );
 
         uint256 mintAmount = _amount * (10 ** uint256(decimals)); // Aggiunge i decimali all'importo da mintare

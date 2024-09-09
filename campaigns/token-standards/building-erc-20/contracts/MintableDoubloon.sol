@@ -26,10 +26,12 @@ contract MintableDoubloon is Doubloon {
     function mint(address _to, uint256 _amount) external {
         require(
             msg.sender == owner,
-            "Solo il proprietario puo mintare nuovi token"
+            "Solo il proprietario può mintare nuovi token"
         );
-        totalSupply += _amount; // Aumenta la fornitura totale.
-        balanceOf[_to] += _amount; // Aggiunge i nuovi token al bilancio dell'indirizzo _to.
-        emit Transfer(address(0), _to, _amount); // Emissione evento Transfer con from impostato a zero address.
+
+        uint256 mintAmount = _amount * (10 ** uint256(decimals)); // Aggiunge i decimali all'importo da mintare
+        totalSupply += mintAmount; // Aumenta la fornitura totale con i decimali inclusi
+        balanceOf[_to] += mintAmount; // Aggiunge i nuovi token al bilancio dell'indirizzo _to
+        emit Transfer(address(0), _to, mintAmount); // Emissione evento Transfer con from impostato a zero address
     }
 }

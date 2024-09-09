@@ -27,14 +27,6 @@ contract Doubloon {
         return true;
     }
 
-    // This is implicitly declared!
-    function allowance(
-        address _owner,
-        address _spender
-    ) external view returns (uint256) {
-        return allowance[_owner][_spender];
-    }
-
     function approve(
         address _spender,
         uint256 _amount

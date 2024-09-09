@@ -26,7 +26,7 @@ contract MintableDoubloon is Doubloon {
     function mint(address _to, uint256 _amount) external {
         require(
             msg.sender == owner,
-            "Solo il proprietario può mintare nuovi token"
+            "Solo il proprietario puo mintare nuovi token"
         );
         totalSupply += _amount; // Aumenta la fornitura totale.
         balanceOf[_to] += _amount; // Aggiunge i nuovi token al bilancio dell'indirizzo _to.

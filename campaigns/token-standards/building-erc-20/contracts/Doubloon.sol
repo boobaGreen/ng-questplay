@@ -9,7 +9,7 @@ contract Doubloon {
 
     /**
      * @dev Il costruttore inizializza la fornitura totale dei token.
-     * @param initialSupply La quantità iniziale di token da creare.
+     * @param _supply La quantità iniziale di token da creare.
      */
     constructor(uint256 _supply) {
         _totalSupply = _supply; // Imposta la fornitura totale.

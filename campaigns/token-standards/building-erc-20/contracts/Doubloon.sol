@@ -9,7 +9,6 @@ import "./interfaces/IERC20.sol";
 contract Doubloon {
     string public constant name = "Doubloon";
     string public constant symbol = "DBL";
-    uint8 public constant decimals = 1;
     uint256 public totalSupply; // Variabile di stato per la fornitura totale di token.
 
     mapping(address => uint256) public balanceOf;
@@ -34,7 +33,7 @@ contract Doubloon {
      * @param _supply La quantità iniziale di token da creare.
      */
     constructor(uint256 _supply) {
-        totalSupply = _supply * (1 ** uint256(decimals)); // Imposta la fornitura totale (aggiunge i decimali).
+        totalSupply = _supply  // Imposta la fornitura totale (aggiunge i decimali).
         balanceOf[msg.sender] = totalSupply; // Assegna tutti i token al creatore iniziale.
     }
 

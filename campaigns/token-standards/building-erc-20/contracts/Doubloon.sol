@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
-
+import "./interfaces/IERC20.sol";
 /**
  * @dev Contratto token con funzioni getter per nome, simbolo e fornitura totale.
  */
@@ -24,6 +24,7 @@ contract Doubloon {
         require(balanceOf[msg.sender] >= _value, "Saldo insufficiente");
         balanceOf[msg.sender] -= _value;
         balanceOf[_to] += _value;
+        emit Transfer(from, to, amount);
         return true;
     }
 
@@ -50,7 +51,7 @@ contract Doubloon {
 
         balanceOf[_from] -= _amount;
         balanceOf[_to] += _amount;
-
+        emit Approval(owner, spender, amount)
         return true;
     }
 }

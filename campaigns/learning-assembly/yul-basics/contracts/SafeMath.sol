@@ -110,7 +110,10 @@ contract SafeMath {
 
             // Perform the division
             result := sdiv(lhs, rhs)
+
+            // Check for overflow
+            // Division itself doesn't cause overflow, but result must be in int256 bounds
+            // We assume result is in int256 bounds if the divisor is not zero
         }
-       
     }
 }

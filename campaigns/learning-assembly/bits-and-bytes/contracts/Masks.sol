@@ -13,7 +13,7 @@ contract Masks {
             // Set bits in x where mask has bits set
             rvalue := or(x, mask)
         }
-        return rvalue;
+        
     }
 
     /// @notice Set all the bits set in mask to 0 in x.
@@ -26,7 +26,7 @@ contract Masks {
             // Clear bits in x where mask has bits set
             rvalue := and(x, not(mask))
         }
-        return rvalue;
+    
     }
 
     /// @notice Get 8 bytes from `x` starting from byte `at` (from the right).
@@ -41,6 +41,6 @@ contract Masks {
             // Extract 8 bytes from x starting at position `at`
             rvalue := shr(mul(at, 8), x)
         }
-        return rvalue;
+   
     }
 }

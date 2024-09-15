@@ -103,14 +103,34 @@ contract SafeMath {
     /// @dev Reverts on division by zero.
     function div(int256 lhs, int256 rhs) public pure returns (int256 result) {
         assembly {
+             // Check for overflow
+            let lhsIsNegative := slt(lhs, 0)
+            let rhsIsNegative := slt(rhs, 0)
+            let resultIsNegative := slt(result, 0)
+
+            // Overflow conditions
+            let overflowPositive := and(
+                iszero(lhsIsNegative),
+                iszero(rhsIsNegative)
+            )
+
+            let overflowNegative := and(
+                lhsIsNegative,
+                rhsIsNegative
+            )
+
+            let overflow := or(
+                and(overflowPositive, resultIsNegative),
+                and(overflowNegative, iszero(resultIsNegative))
+            )
+
+            if overflow {
+                revert(0, 0)
+            }
             // Revert if dividing by zero
             if iszero(rhs) {
                 revert(0, 0)
             }
-            if iszero(lhs) {
-                revert(0, 0)
-            }
-
             // Perform the division
             result := sdiv(lhs, rhs)
         }

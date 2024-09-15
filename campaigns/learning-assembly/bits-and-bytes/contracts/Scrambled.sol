@@ -32,7 +32,7 @@ contract Scrambled {
             let part_c := and(shiftedValue_c, mask_c)
 
             // Construct the final 20-byte address
-            // Combine part_a (8 bytes), part_b (6 bytes), and part_c (6 bytes)
+        
             let semiResult := or(part_c, shl(48, part_b))
             rvalue := or(semiResult, shl(96, part_a))
         }

@@ -10,7 +10,8 @@ contract Masks {
         returns (uint256 rvalue)
     {
         assembly {
-            rvalue := or(x, mask) // mask is inverted
+            // Set bits in x where mask has bits set
+            rvalue := or(x, mask)
         }
         return rvalue;
     }
@@ -22,7 +23,8 @@ contract Masks {
         returns (uint256 rvalue)
     {
         assembly {
-            rvalue := and(x, not(mask)) // mask is inverted
+            // Clear bits in x where mask has bits set
+            rvalue := and(x, not(mask))
         }
         return rvalue;
     }
@@ -36,6 +38,7 @@ contract Masks {
         returns (uint64 rvalue)
     {
         assembly {
+            // Extract 8 bytes from x starting at position `at`
             rvalue := shr(mul(at, 8), x)
         }
         return rvalue;

@@ -13,7 +13,13 @@ contract If {
         returns (uint256 _hours)
     {
         assembly {
-
+            if iszero(eq(mod(_minutes, 60), 0)) {
+                revert(0, 0)
+            }
+            if slt(_minutes, 0) {
+                revert(0, 0)
+            }
+            _hours := div(_minutes, 60)
         }
     }
 }

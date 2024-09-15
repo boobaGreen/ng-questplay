@@ -10,7 +10,7 @@ contract Arithmetic {
         int256 rhs
     ) external pure returns (int256 result) {
         assembly {
-
+            result:= add(lhs, rhs)
         }
     }
 
@@ -21,7 +21,7 @@ contract Arithmetic {
         int256 rhs
     ) external pure returns (int256 result) {
         assembly {
-
+            result:= mul(lhs, rhs)
         }
     }
 
@@ -31,7 +31,7 @@ contract Arithmetic {
         uint256 rhs
     ) external pure returns (uint256 result) {
         assembly {
-
+            result:= mod(lhs, rhs)
         }
     }
 
@@ -41,7 +41,7 @@ contract Arithmetic {
         uint256 rhs
     ) external pure returns (uint256 result) {
         assembly {
-
+            result:= exp(lhs, rhs)
         }
     }
 
@@ -51,7 +51,7 @@ contract Arithmetic {
         int256 rhs
     ) external pure returns (int256 result) {
         assembly {
-
+            result:= sdiv(lhs, rhs)
         }
     }
 

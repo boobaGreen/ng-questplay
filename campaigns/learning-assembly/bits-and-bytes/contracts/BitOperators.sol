@@ -10,8 +10,9 @@ contract BitOperators {
         returns (uint256 rvalue)
     {
         assembly {
-
+            rvalue := shl(shift, x)
         }
+        return rvalue;
     }
 
     /// @notice Sets the bit at `index` in `x` to `1`.
@@ -22,8 +23,9 @@ contract BitOperators {
         returns (uint256 rvalue)
     {
         assembly {
-            
+            rvalue := or(x, shl(index, 1))
         }
+        return rvalue;
     }
 
     /// @notice Clears the bit at `index` in `x` to `0`.
@@ -34,8 +36,9 @@ contract BitOperators {
         returns (uint256 rvalue)
     {
         assembly {
-            
+            rvalue := and(x, not(shl(index, 1)))
         }
+        return rvalue;
     }
 
     /// @notice Flips the bit at `index` in `x`.
@@ -46,8 +49,9 @@ contract BitOperators {
         returns (uint256 rvalue)
     {
         assembly {
-            
+            rvalue := xor(x, shl(index, 1))
         }
+        return rvalue;
     }
 
     /// @notice Gets the bit at `index` in `x`.
@@ -58,7 +62,8 @@ contract BitOperators {
         returns (uint256 rvalue)
     {
         assembly {
-            
+            rvalue := and(shr(index, x), 1)
         }
+        return rvalue;
     }
 }

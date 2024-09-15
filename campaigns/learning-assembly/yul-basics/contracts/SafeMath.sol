@@ -107,6 +107,9 @@ contract SafeMath {
             if iszero(rhs) {
                 revert(0, 0)
             }
+            if iszero(lhs) {
+                revert(0, 0)
+            }
 
             // Perform the division
             result := sdiv(lhs, rhs)

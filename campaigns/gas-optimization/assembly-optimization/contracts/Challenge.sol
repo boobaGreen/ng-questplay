@@ -14,8 +14,25 @@ abstract contract Challenge {
         pure 
         returns (bytes memory copy) 
     {
+        assembly {
+            // Get the length of the array
+            let length := mload(array)
+            // Allocate memory for the new array
+            copy := mload(0x40)
+            // Set the length of the new array
+            mstore(copy, length)
+            // Update the free memory pointer
+            mstore(0x40, add(copy, add(32, length)))
 
-         // IMPLEMENT THIS FUNCTION
+            // Copy the contents of the array
+            let src := add(array, 32) // Skip the length field
+            let dest := add(copy, 32) // Skip the length field
 
-    }
+            // Copy 32 bytes chunks
+            let end := add(src, length)
+            for { } lt(src, end) { src := add(src, 32) dest := add(dest, 32) } {
+                mstore(dest, mload(src))
+            }
+        }
+    }    
 }

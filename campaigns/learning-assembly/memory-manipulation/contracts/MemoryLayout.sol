@@ -33,35 +33,35 @@ contract MemoryLayout {
         }
     }
  
-    /// @notice Create a bytes memory array.
-/// @param size The size of the array.
-/// @param value The initial value of each element of the array.
-function createBytesArray(
-    uint256 size, 
-    bytes1 value
-) public pure returns (bytes memory array) {
-    assembly {
-        // 1. Read start of free memory
-        array := mload(0x40)
+     /// @notice Create a bytes memory array.
+    /// @param size The size of the array.
+    /// @param value The initial value of each element of the array.
+    function createBytesArray(
+        uint256 size, 
+        bytes1 value
+    ) public pure returns (bytes memory array) {
+        assembly {
+            // 1. Read start of free memory
+            array := mload(0x40)
 
-        // 2. Record the length of the array (in bytes, not words)
-        mstore(array, size)
+            // 2. Record the length of the array (in bytes)
+            mstore(array, size)
 
-        // 3. Calculate the initial offset (0x20 bytes for the length field)
-        let offset := add(array, 0x20)
+            // 3. Calculate the starting offset for data (0x20 for length)
+            let dataStart := add(array, 0x20)
 
-        // 4. Prepare the value for left alignment (shift left by 248 bits)
-        let alignedValue := shl(248, value)
+            // 4. Prepare the value for left alignment (shift left by 248 bits)
+            let alignedValue := shl(248, value)
 
-        // 5. Loop to initialize the array's content with `value`
-        for { let i := 0 } lt(i, size) { i := add(i, 1) } {
-            mstore8(add(offset, i), alignedValue)  // Store the aligned value byte by byte
+            // 5. Initialize each byte in the array with the aligned value
+            for { let i := 0 } lt(i, size) { i := add(i, 1) } {
+                // Store the aligned value byte by byte
+                mstore8(add(dataStart, i), byte(0, alignedValue))
+            }
+
+            // 6. Update the free memory pointer
+            mstore(0x40, add(dataStart, size))
         }
-
-        // 6. Update free memory pointer to the end of the array
-        // Array length (0x20) + data size (size)
-        mstore(0x40, add(add(array, 0x20), size))
     }
-}
 
 }

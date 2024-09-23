@@ -51,9 +51,12 @@ contract MemoryLayout {
             // Starting offset is 0x20 (skipping the length field)
             let offset := 0x20
 
-            // Initialize the content of the array to the given value
+            // Prepare the `bytes1` value to be left-aligned
+            let leftAlignedValue := shl(248, value)  // shift 248 bits to the left to align `bytes1`
+
+            // Initialize the content of the array to the left-aligned value
             for {let i := 0} lt(i, size) {i := add(i, 1)} {
-                mstore8(add(array, offset), value)
+                mstore8(add(array, offset), leftAlignedValue)
                 offset := add(offset, 1)
             }
 

@@ -42,13 +42,7 @@ contract MemoryLayout {
         assembly {
             // Check if size is zero or less
             if or(iszero(size), lt(size, 0)) {
-                // Return an empty bytes array
-                array := mload(0x40) // Start of free memory
-                mstore(array, 0) // Length is zero
-                // Update the free memory pointer
-                mstore(0x40, add(array, 0x20))
-                return(array, 0x20) // Return empty array
-            }
+                        revert(0, 0) }
 
             // 1. Read start of free memory
             array := mload(0x40)

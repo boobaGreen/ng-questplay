@@ -32,7 +32,8 @@ contract MemoryLayout {
         mstore(0x40, add(array, offset))
         }
     }
- /// @notice Create a bytes memory array.
+ 
+    /// @notice Create a bytes memory array.
     /// @param size The size of the array.
     /// @param value The initial value of each element of the array.
     function createBytesArray(
@@ -46,18 +47,15 @@ contract MemoryLayout {
             // 2. Record the length of the array (in bytes, not words)
             mstore(array, size)
 
-            // 3. Calculate the start of the data section
+            // 3. Set the starting point for writing the array's data
             let dataStart := add(array, 0x20)
 
-            // 4. Prepare the value by left-aligning the single byte in a 32-byte word
-            let alignedValue := shl(248, value)
-
-            // 5. Initialize each byte of the array with the value
+            // 4. Fill the array with the `value` byte
             for {let i := 0} lt(i, size) {i := add(i, 1)} {
                 mstore8(add(dataStart, i), value)
             }
 
-            // 6. Update free memory pointer
+            // 5. Update free memory pointer after the array
             mstore(0x40, add(dataStart, size))
         }
     }

@@ -41,22 +41,25 @@ contract MemoryLayout {
         bytes1 value
     ) public pure returns (bytes memory array) {
         assembly {
-            // 1. Read start of free memory
+            // 1. Read the current free memory pointer
             array := mload(0x40)
 
-            // 2. Record the length of the array (in bytes, not words)
+            // 2. Store the length of the array
             mstore(array, size)
 
-            // 3. Set the starting point for writing the array's data
+            // 3. The actual data starts at offset 0x20 after the length
             let dataStart := add(array, 0x20)
 
-            // 4. Fill the array with the `value` byte
-            for {let i := 0} lt(i, size) {i := add(i, 1)} {
-                mstore8(add(dataStart, i), value)
+            // 4. Prepare the value for left alignment (shift left by 248 bits)
+            let alignedValue := shl(248, value)
+
+            // 5. Store each `bytes1` value, left-aligned in its word
+            for { let i := 0 } lt(i, size) { i := add(i, 1) } {
+                mstore(add(dataStart, mul(i, 0x20)), alignedValue)
             }
 
-            // 5. Update free memory pointer after the array
-            mstore(0x40, add(dataStart, size))
+            // 6. Update the free memory pointer after storing all elements
+            mstore(0x40, add(dataStart, mul(size, 0x20)))
         }
     }
 }

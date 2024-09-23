@@ -41,7 +41,7 @@ contract MemoryLayout {
     ) public pure returns (bytes memory array) {
         assembly {
             // Check if size is zero or less
-            if or(iszero(size), lt(size, 0)) {
+            if (lt(size, 0)) {
                         revert(0, 0) }
 
             // 1. Read start of free memory

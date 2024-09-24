@@ -11,25 +11,23 @@ contract MemoryLayout {
         uint256 value
     ) public pure returns (uint256[] memory array) {
         assembly {
-        // 1. Read start of free memory
-        array := mload(0x40)
+            // 1. Read start of free memory
+            array := mload(0x40)
 
-        // 2. Record the length of the array
-        mstore(array, size)
+            // 2. Record the length of the array
+            mstore(array, size)
 
-        // 3. Initialize next `size` words with `value`.
-        
-        // Starting offset is 0x20 (skipping the length field)
-        let offset := 0x20
+            // 3. Initialize next `size` words with `value`.
+            let offset := 0x20 // Starting offset (skipping the length field)
 
-        // Initialize the content of the array to the given value
-        for {let i := 0} lt(i, size) {i := add(i, 0x01)} {
-            mstore(add(array, offset), value)
-            offset := add(offset, 0x20)
-        }
+            // Initialize the content of the array to the given value
+            for {let i := 0} lt(i, size) {i := add(i, 0x01)} {
+                mstore(add(array, offset), value)
+                offset := add(offset, 0x20)
+            }
 
-        // 4. Mark the array memory area as allocated
-        mstore(0x40, add(array, offset))
+            // 4. Mark the array memory area as allocated
+            mstore(0x40, add(array, offset))
         }
     }
 
@@ -48,12 +46,12 @@ contract MemoryLayout {
             mstore(array, size)
 
             // 3. Initialize next `size` bytes with `value`.
-            // Starting offset is 0x20 (skipping the length field)
-            let offset := 0x20
+            let offset := 0x20 // Starting offset (skipping the length field)
 
             // Initialize the content of the array to the given value
             for {let i := 0} lt(i, size) {i := add(i, 1)} {
-                mstore8(add(array, offset), value)
+                // Shift the left-aligned `bytes1` value to the right
+                mstore8(add(array, offset), byte(0, value)) // Extract rightmost byte
                 offset := add(offset, 1)
             }
 

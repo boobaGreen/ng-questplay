@@ -14,7 +14,23 @@ contract GreatScribe {
         bytes[] calldata calls,
         address archives
     ) external view returns (bytes[] memory results) {
-        // CODE HERE
+        // Initialize an array to store the results
+        results = new bytes[](calls.length);
+        
+        // Loop through each calldata and forward it to the target contract using staticcall
+        for (uint256 i = 0; i < calls.length; i++) {
+            // Perform the low-level staticcall
+            (bool success, bytes memory result) = archives.staticcall(calls[i]);
+
+            // Check if the call succeeded
+            require(success, "Call failed!");
+
+            // Store the result in the results array
+            results[i] = result;
+        }
+
+        // Return the results
+        return results;
     }
     
     /**
@@ -28,7 +44,23 @@ contract GreatScribe {
         bytes[] calldata calls,
         address archives
     ) external returns (bytes[] memory results) {
-        // CODE HERE
+        // Initialize an array to store the results
+        results = new bytes[](calls.length);
+        
+        // Loop through each calldata and forward it to the target contract using call
+        for (uint256 i = 0; i < calls.length; i++) {
+            // Perform the low-level call
+            (bool success, bytes memory result) = archives.call(calls[i]);
+
+            // Check if the call succeeded
+            require(success, "Call failed!");
+
+            // Store the result in the results array
+            results[i] = result;
+        }
+
+        // Return the results
+        return results;
     }
 
 }
